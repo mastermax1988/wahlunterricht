@@ -1,0 +1,104 @@
+<html>
+  
+  <meta charset="utf-8">
+  <body>
+    <input id="in" type="file" onchange="parseFiles(this.files)" multiple />
+  <script>
+  var theData=[];
+  var pupilData=[];
+  var filestoread=-1;
+  var kursuebersicht=[];
+  var kursData=[];
+  
+/// HIER ANPASSEN
+  var klassen=["5a","5b","5c"];
+  theData[0]= {tag:"Montag", kurse:["Schwimmen","Basteln","Karate"]};
+  theData[1]= {tag:"Dienstag", kurse:["Singen","Fußball"]};
+  var speicherort = "Die Datei bitte im Klassenordner speichern. Den Dateinamen nicht ändern.";
+  ///
+  
+  function parseFiles(files)
+  {
+    document.getElementById("in").remove();
+    filestoread=files.length;
+    for(var i=0;i<files.length;i++)
+    {
+      var r = new FileReader();
+	    r.onload = (function(f) {
+		  return function(e) {
+			  parseFile(e.target.result);
+		  }
+	  })(files[i]); 
+    r.readAsText(files[i]);
+    }
+  }
+  function parseFile(file)
+  {
+    pupilData[pupilData.length]=JSON.parse(file);
+    console.log(filestoread);
+    filestoread--;
+    if(filestoread==0)
+      start(); 
+  }
+  function start()
+  {
+    getnerateKurse();
+    for(var i=0;i<pupilData.length;i++)
+      for(var j=0;j<pupilData[i].auswahl.length;j++)
+      {
+        teileEin(pupilData[i].nn, pupilData[i].vn, pupilData[i].kl, pupilData[i].auswahl[j].tag,  pupilData[i].auswahl[j].wahl);
+
+      }
+    ausgabe();
+  }
+
+  function ausgabe()
+  {
+    for(var i=0;i<kursuebersicht.length;i++)
+    {
+      var data=kursData[kursuebersicht[i]]
+      br();
+      log(kursuebersicht[i])
+      for(var j=0;j<data.length;j++)
+        log(data[j].kl + " " + data[j].vn + " " + data[j].nn);
+    }
+  }
+  function getnerateKurse()
+  {
+    for(var i=0;i<theData.length;i++)
+      for(var j=0;j<theData[i].kurse.length;j++)
+      {
+        var s = theData[i].tag + "_"+ theData[i].kurse[j];
+        kursuebersicht[kursuebersicht.length]=s;
+        kursData[s]=[];
+      }
+  }
+  function teileEin(nn, vn, kl, tag, wahl)
+  {
+    var p = {vn: vn, nn: nn, kl: kl};
+    if(kursData[tag+"_"+wahl[0]]<kursData[tag + "_" + wahl[1]])
+      schreibeEin(tag+ "_" + wahl[0],p)
+    else
+      schreibeEin(tag + "_" + wahl[1],p);
+  }
+
+  function schreibeEin(kurs, daten)
+  {
+    kursData[kurs][kursData[kurs].length]=daten;
+  }
+  function br()
+  {
+    var b=document.createElement("br")
+    document.body.appendChild(b);
+  } 
+  function log(s)
+  {
+    var b=document.createElement("div")
+    b.innerHTML=s;
+    document.body.appendChild(b);
+
+  }
+  </script>
+  </body>
+
+</html>
