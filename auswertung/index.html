@@ -42,14 +42,20 @@
   }
   function start()
   {
-    getnerateKurse();
-    for(var i=0;i<pupilData.length;i++)
-      for(var j=0;j<pupilData[i].auswahl.length;j++)
-      {
-        teileEin(pupilData[i].nn, pupilData[i].vn, pupilData[i].kl, pupilData[i].auswahl[j].tag,  pupilData[i].auswahl[j].wahl);
+    for(var k=0;k<10;k++)
+    {
+      kursuebersicht=[];
+      kursData=[];
+      generateKurse();
+      pupilData.sort(() => Math.random() - 0.5);
+      for(var i=0;i<pupilData.length;i++)
+        for(var j=0;j<pupilData[i].auswahl.length;j++)
+        {
+          teileEin(pupilData[i].nn, pupilData[i].vn, pupilData[i].kl, pupilData[i].auswahl[j].tag,  pupilData[i].auswahl[j].wahl);
 
-      }
-    ausgabe();
+        }
+      ausgabe();
+    }
   }
 
   function ausgabe()
@@ -62,8 +68,15 @@
       for(var j=0;j<data.length;j++)
         log(data[j].kl + " " + data[j].vn + " " + data[j].nn);
     }
+    var s="";
+    for(var i=0;i<kursuebersicht.length;i++)
+      s+=kursData[kursuebersicht[i]].length + " ";
+    log("Kursstärken: " + s);
+    br();
+    br();
+
   }
-  function getnerateKurse()
+  function generateKurse()
   {
     for(var i=0;i<theData.length;i++)
       for(var j=0;j<theData[i].kurse.length;j++)
