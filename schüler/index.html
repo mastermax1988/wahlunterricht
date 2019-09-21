@@ -76,7 +76,7 @@
         continue;
       if(theSels[j].selectedOptions.length!=2 )
       {  
-        alert("Bitte keine oder genau zwei Angebote wählen!");
+        alert("Bitte keine oder genau zwei Angebote wählen! Zur Mehrfachauswahl STRG gedrückt halten.");
         return;
       }
       retData.auswahl[retData.auswahl.length]={tag:theData[j].tag, wahl: [theSels[j].selectedOptions[0].value, theSels[j].selectedOptions[1].value]}; 
