@@ -13,9 +13,11 @@
 
   /// HIER ANPASSEN
   /// Kurse und Tage OHNE Leerzeichen, ggf. z.B. Schwimmen_Mädchen
-  var klassen=["5a","5b","5c"];
-  theData[0]= {tag:"Montag", kurse:["Schwimmen","Basteln","Karate"]};
-  theData[1]= {tag:"Dienstag", kurse:["Singen","Fußball"]};
+  var klassen=["5a","5b","5c","5c","5d","5e","5f","6a","6b","6c","6c","6d","6e","6f", "7a","7b","7c","7c","7d","7e"];
+  theData[0]= {tag:"Montag", kurse:["Art_School","Art_School_2", "Handlettering_Kreative_Hände", "Gesellschaftsspiele", "Outdoor_Sport_und_Spiel", "Spiel_und_Spaß_Schulgarten","Freispiel","Kreativworkshop"]};
+  theData[1]= {tag:"Dienstag", kurse:["Spielenachmittag","Outdoor_Sport_und_Spiel","Outdoor_Sport_und_Spiel_2", "Dance_Academy","Chill_und_Lies", "pick_it_up_Projekt", "Kreativworkshop", "Spiel_und_Spaß", "Spiel_und_Spaß_2", "Freispiel", "Lernspiele_am_PC"]};
+  theData[2]={tag:"Mittwoch", kurse:["Outdoor_Sport_und_Spiel","Outdoor_Sport_und_Spiel_2", "pick_it_up_Projekt",  "Spielenachmittag", "Bastel_das_Jahr", "Spiel_und_Spaß", "Lernspiele_am_PC", "Kreativworkshop", "Chill_und_Lies", "Freispiel"]};
+    theData[3]={tag:"Donnerstag", kurse:["Outdoor_Sport_und_Spiel","Cheerleading_Fitness", "Textiles_Gestalten", "Relax_und_Entspann_dich", "Spielenachmittag", "Streetball"]};
   var speicherort = "Die Datei bitte im Klassenordner speichern. Den Dateinamen nicht ändern.";
   ///
 
@@ -43,6 +45,9 @@
     document.body.appendChild(div);
     theSels[i] = document.createElement("select");
     theSels[i].setAttribute('multiple',"");
+    theSels[i].setAttribute("style","width:400px;");
+    theSels[i].setAttribute("size",theData[i].kurse.length+1);
+
     for(var j=0;j<theData[i].kurse.length;j++)
     {
       var opt = document.createElement("option")
