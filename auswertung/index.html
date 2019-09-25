@@ -9,15 +9,18 @@
   var filestoread=-1;
   var kursuebersicht=[];
   var kursData=[];
+  var kursFaktor=[];//für doppelte kurse, wie basteln1 und basteln2
   
 /// HIER ANPASSEN
   var klassen=["5a","5b","5c","5c","5d","5e","5f","6a","6b","6c","6c","6d","6e","6f", "7a","7b","7c","7c","7d","7e"];
   var speicherort = "Die Datei bitte im Klassenordner speichern. Den Dateinamen nicht ändern.";
   
-  theData[0]= {tag:"Montag", kurse:["Art_School","Art_School_2", "Handlettering_Kreative_Hände", "Gesellschaftsspiele", "Outdoor_Sport_und_Spiel", "Spiel_und_Spaß_Schulgarten","chill_und_lies","Kreativworkshop"]};
-  theData[1]= {tag:"Dienstag", kurse:["Spielenachmittag","Outdoor_Sport_und_Spiel","Outdoor_Sport_und_Spiel_2", "Dance_Academy","chill_und_lies", "pick_it_up_Projekt", "Kreativworkshop", "Spiel_und_Spaß", "Spiel_und_Spaß_2", "Freispiel", "Lernspiele_am_PC"]};
-  theData[2]={tag:"Mittwoch", kurse:["Outdoor_Sport_und_Spiel","Outdoor_Sport_und_Spiel_2", "pick_it_up_Projekt",  "Spielenachmittag", "Bastel_das_Jahr", "Spiel_und_Spaß", "Lernspiele_am_PC", "Kreativworkshop", "chill_und_lies", "Freispiel"]};
-    theData[3]={tag:"Donnerstag", kurse:["Outdoor_Sport_und_Spiel","Outdoor_Sport_und_Spiel_2", "Textiles_Gestalten", "Relax_und_Entspann_dich", "Spielenachmittag", "Streetball"]};
+  theData[0]= {tag:"Montag", kurse:["Art_School", "Handlettering_Kreative_Hände", "Gesellschaftsspiele", "Outdoor_Sport_und_Spiel", "Spiel_und_Spaß_Schulgarten","chill_und_lies","Kreativworkshop"]};
+  theData[1]= {tag:"Dienstag", kurse:["Spielenachmittag","Outdoor_Sport_und_Spiel", "Dance_Academy","chill_und_lies", "pick_it_up_Projekt", "Kreativworkshop", "Spiel_und_Spaß", "Freispiel", "Lernspiele_am_PC"]};
+  theData[2]={tag:"Mittwoch", kurse:["Outdoor_Sport_und_Spiel", "pick_it_up_Projekt",  "Spielenachmittag", "Bastel_das_Jahr", "Spiel_und_Spaß", "Lernspiele_am_PC", "Kreativworkshop", "chill_und_lies", "Freispiel"]};
+    theData[3]={tag:"Donnerstag", kurse:["Outdoor_Sport_und_Spiel", "Textiles_Gestalten", "Relax_und_Entspann_dich", "Spielenachmittag", "Streetball"]};
+  
+var doppelteKurse=["Montag_Art_School", "Dienstag_Outdoor_Sport_und_Spiel", "Dienstag_Spiel_und_Spaß", "Mittwoch_Outdoor_Sport_und_Spiel", "Donnerstag_Outdoor_Sport_und_Spiel"];
 ///
   
   function parseFiles(files)
@@ -38,7 +41,6 @@
   function parseFile(file)
   {
     pupilData[pupilData.length]=JSON.parse(file);
-    console.log(filestoread);
     filestoread--;
     if(filestoread==0)
       start(); 
@@ -87,12 +89,13 @@
         var s = theData[i].tag + "_"+ theData[i].kurse[j];
         kursuebersicht[kursuebersicht.length]=s;
         kursData[s]=[];
+        kursFaktor[s]=doppelteKurse.includes(s)?2:1;
       }
   }
   function teileEin(nn, vn, kl, tag, wahl)
   {
     var p = {vn: vn, nn: nn, kl: kl};
-    if(kursData[tag+"_"+wahl[0]]<kursData[tag + "_" + wahl[1]])
+    if(kursData[tag+"_"+wahl[0]].length/kursFaktor[tag+"_"+wahl[0]]<kursData[tag + "_" + wahl[1]].length/kursFaktor[tag+"_"+wahl[1]])
       schreibeEin(tag+ "_" + wahl[0],p)
     else
       schreibeEin(tag + "_" + wahl[1],p);
