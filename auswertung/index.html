@@ -69,14 +69,16 @@ var doppelteKurse=["Montag_Art_School", "Dienstag_Outdoor_Sport_und_Spiel", "Die
     {
       var data=kursData[kursuebersicht[i]]
       br();
-      log(kursuebersicht[i])
+      log("<b>" + kursuebersicht[i] + "</b>")
       for(var j=0;j<data.length;j++)
-        log(data[j].kl + " " + data[j].vn + " " + data[j].nn);
+        log(data[j].kl + " " + data[j].vn + " " + data[j].nn + " (" + data[j].w[0] + ", " + data[j].w[1] + ")");
     }
     var s="";
     for(var i=0;i<kursuebersicht.length;i++)
       s+=kursData[kursuebersicht[i]].length + " ";
     log("Kursstärken: " + s);
+    br();
+    br();
     br();
     br();
 
@@ -94,7 +96,7 @@ var doppelteKurse=["Montag_Art_School", "Dienstag_Outdoor_Sport_und_Spiel", "Die
   }
   function teileEin(nn, vn, kl, tag, wahl)
   {
-    var p = {vn: vn, nn: nn, kl: kl};
+    var p = {vn: vn, nn: nn, kl: kl, w: wahl};
     if(kursData[tag+"_"+wahl[0]].length/kursFaktor[tag+"_"+wahl[0]]<kursData[tag + "_" + wahl[1]].length/kursFaktor[tag+"_"+wahl[1]])
       schreibeEin(tag+ "_" + wahl[0],p)
     else
