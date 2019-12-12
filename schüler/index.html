@@ -29,8 +29,7 @@ var speicherort = "Die Datei bitte im Klassenordner speichern. Den Dateinamen ni
   var clearBtn=document.createElement("button");
   clearBtn.innerHTML="Auswahl löschen";
   clearBtn.onclick = () => {
-    for(var i=0;i<theSels.length;i++)
-      theSels[i].selectedIndex=-1;
+    resetinput();
   }
   document.body.appendChild(clearBtn);
   for(var i=0;i<klassen.length;i++)
@@ -98,6 +97,7 @@ var speicherort = "Die Datei bitte im Klassenordner speichern. Den Dateinamen ni
     var link2=document.body.appendChild(link);
     link2.click();
     link2.remove();
+    resetinput();
   };
   document.body.appendChild(button);
   function br()
@@ -105,6 +105,13 @@ var speicherort = "Die Datei bitte im Klassenordner speichern. Den Dateinamen ni
     var b=document.createElement("br")
     document.body.appendChild(b);
   } 
+  function resetinput()
+  {
+    for(var i=0;i<theSels.length;i++)
+      theSels[i].selectedIndex=-1;
+    document.getElementById("vn").value="";
+    document.getElementById("nn").value="";
+  }
   </script>
 
   </body>
